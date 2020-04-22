@@ -1,0 +1,15 @@
+<custom-action actionType="PrometheusMonitoring" isHit="false"
+    name="prometheusmonitoring" uid="f12cfc54-6039-42a4-9267-fb5e5d887d05">
+    <description>The PrometheusMonitoring Action will get metrics from Prometheus.
+Possible parameters are:&#xd;
+- PrometheusHost (required): The Prometheus host or ip Default value is "Your prometheus end point".&#xd;
+- PrometheusPort (required): Dynatrace ID (section of your Dynatrace saas url). Default value is "80".&#xd;
+- NeoLoadJsonMetricFile (required): Path to the file describing the metrics to query Default value is "${NL-CustomResources}/yourjsonfile.json".&#xd;
+- NeoLoadProxy (optional): Proxy named defined in the NeoLoad settings Default value is "proxy name defined in NeoLoad settings".&#xd;
+- NeoLoadDataExchangeApiKey (optional): Dataexchange API key defined in NeoLoad Default value is "Dataexchange API key defined in NeoLoad".&#xd;
+- Tracemode (optional): Tracemode will enable logging of the api calls done agains prometeus. Value possible : True /False Default value is "False".</description>
+    <custom-action-parameter name="PrometheusHost" type="TEXT" value="64.137.172.233"/>
+    <custom-action-parameter name="PrometheusPort" type="TEXT" value="9090"/>
+    <custom-action-parameter name="NeoLoadJsonMetricFile" type="TEXT" value="${NL-CustomResources}/yourjsonfile.json"/>
+    <responsePageFileDescription>recorded-responses/res_f12cfc54-6039-42a4-9267-fb5e5d887d05</responsePageFileDescription>
+</custom-action>

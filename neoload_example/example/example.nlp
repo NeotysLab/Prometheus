@@ -1,0 +1,13 @@
+# Project description file
+
+project.name=example
+project.version=7.0
+project.original.version=4.2
+product.name=NeoLoad
+product.original.name=
+product.version=7.2.2
+product.original.version=
+project.id=7b3dcedb-f2a8-44d7-8050-cad5ecd0a7ff
+project.config.path=team
+project.config.storage=XML_MULTI
+team.server.enabled=false

@@ -1,0 +1,15 @@
+{ 
+  indicatorList : [
+		{
+			metricName :"go_gc_duration_seconds",
+			labels : 
+				{
+				  job: "prometheus",
+				quantile : "0.25"
+				},
+			unit:"s"
+		}
+	
+	]
+
+}
