@@ -10,6 +10,8 @@ public final class Constants {
 	public static final String NEOLOAD_CONTEXT_LOCATION = PROMETHEUS;
 	public static final String NEOLOAD_CONTEXT_SOFTWARE = PROMETHEUS;
 	public static final String PROMETHEUS_API_PROTOCOL="http://";
+	public static final String PROMETHEUS_API_SECURE_PROTOCOL="https://";
+
 	/*** NeoLoad Current Virtual user context (Keep object in cache cross iterations) ***/
 	public static final String NL_DATA_EXCHANGE_API_CLIENT = "NLDataExchangeAPIClient";
 

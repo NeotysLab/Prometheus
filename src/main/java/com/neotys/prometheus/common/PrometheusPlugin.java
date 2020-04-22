@@ -39,9 +39,9 @@ public class PrometheusPlugin {
     private Optional<String> proxyName;
     private String prometheusHost;
     private String prometheusPort;
-
+    private boolean ssl;
     private PrometheusPlugin(String host,String port,PrometheusIndicators prometheusIndicators, Long starttime, String vitualUserID, Context context,final String dataExchangeApiUrl,
-                             final Optional<String> proxyName,boolean tracemode) {
+                             final Optional<String> proxyName,boolean ssl,boolean tracemode) {
         this.prometheusHost=host;
         this.prometheusPort=port;
         this.prometheusIndicators = prometheusIndicators;
@@ -57,9 +57,10 @@ public class PrometheusPlugin {
         this.tracemode=tracemode;
         this.dataExchangeApiUrl=dataExchangeApiUrl;
         this.proxyName=proxyName;
+        this.ssl=ssl;
     }
 
-    public synchronized static PrometheusPlugin getInstance(String host,String port,PrometheusIndicators prometheusIndicators, Long starttime, String vitualUserID, Context context,final String dataExchangeApiUrl, final Optional<String> proxyName,boolean tracemode)  throws Exception {
+    public synchronized static PrometheusPlugin getInstance(String host, String port, PrometheusIndicators prometheusIndicators, Long starttime, String vitualUserID, Context context, final String dataExchangeApiUrl, final Optional<String> proxyName, boolean ssl, boolean traceMode)  throws Exception {
         if (instance == null) {
             instance = new PrometheusPlugin(host,port,
                     prometheusIndicators,
@@ -68,7 +69,8 @@ public class PrometheusPlugin {
                     context,
                     dataExchangeApiUrl,
                     proxyName,
-                    tracemode);
+                    ssl,
+                    traceMode);
         }else{
             instance.setContext(context);
         }
@@ -80,8 +82,18 @@ public class PrometheusPlugin {
         }
         return Optional.absent();
     }
+    private String getUrl()
+    {
+        if(ssl)
+        {
+            return PROMETHEUS_API_SECURE_PROTOCOL+prometheusHost+":"+prometheusPort+PROMETHEUS_QUERY_PATH;
+        }
+        else
+            return PROMETHEUS_API_PROTOCOL+prometheusHost+":"+prometheusPort+PROMETHEUS_QUERY_PATH;
+
+    }
     private List<Entry> getINdicatorsData(PrometheusIndicator indicator) throws Exception {
-        final String url=PROMETHEUS_API_PROTOCOL+prometheusHost+":"+prometheusPort+PROMETHEUS_QUERY_PATH;
+        final String url=getUrl();
         final Optional<Proxy> proxy = getProxy(context, proxyName, url);
         final HashMap<String,String> header=new HashMap<>();
         List<Entry> result=new ArrayList<>();

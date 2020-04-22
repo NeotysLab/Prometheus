@@ -69,6 +69,8 @@ public class PrometheusMonitoringActionEngine implements ActionEngine {
         final String prometheussHost = parsedArgs.get(PrometheusMonitoringOption.PrometheusHost.getName()).get();
         final String prometheusPort = parsedArgs.get(PrometheusMonitoringOption.PrometheusPort.getName()).get();
         final String prometheusFile = parsedArgs.get(PrometheusMonitoringOption.NeoLoadJsonMetricFile.getName()).get();
+        final String ssl=parsedArgs.get(PrometheusMonitoringOption.SSL.getName()).get();
+
         final Optional<String> optionalTraceMode = parsedArgs.get(PrometheusMonitoringOption.TraceMode.getName());
         final Optional<String> proxyName = parsedArgs.get(PrometheusMonitoringOption.NeoLoadProxy.getName());
 
@@ -92,9 +94,9 @@ public class PrometheusMonitoringActionEngine implements ActionEngine {
 
             final String virtualUserId = context.getCurrentVirtualUser().getId();
             boolean traceMode = optionalTraceMode.isPresent() && Boolean.valueOf(optionalTraceMode.get());
+            boolean boolssl=Boolean.valueOf(ssl);
 
-
-            PrometheusPlugin pluginData= PrometheusPlugin.getInstance(prometheussHost,prometheusPort,PrometheusUtils.getIndicators(prometheusFile),(Long)prometheusMonitoringTime,virtualUserId,context,getDefaultDataExchangeApiUrl(context),proxyName,traceMode);
+            PrometheusPlugin pluginData= PrometheusPlugin.getInstance(prometheussHost,prometheusPort,PrometheusUtils.getIndicators(prometheusFile),(Long)prometheusMonitoringTime,virtualUserId,context,getDefaultDataExchangeApiUrl(context),proxyName,boolssl,traceMode);
 
 
 
