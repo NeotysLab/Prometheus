@@ -1,9 +1,13 @@
 package com.neotys.prometheus.common;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -13,6 +17,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -54,14 +59,23 @@ class HTTPGeneratorUtils {
 		request.setURI(new URL(urlWithParameters).toURI());
 	}
 
-	static DefaultHttpClient newHttpClient(final boolean isHttps) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+	static DefaultHttpClient newHttpClient(final boolean isHttps, Optional<String> user, Optional<String> password) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+		DefaultHttpClient httpClient;
 		if (isHttps) {
-			return newHttpsClient();
+			httpClient= newHttpsClient();
 		} else {
-			final DefaultHttpClient httpClient = new DefaultHttpClient();
+			httpClient = new DefaultHttpClient();
 			httpClient.getConnectionManager();
-			return httpClient;
+
 		}
+		if(user.isPresent()&&password.isPresent())
+		{
+			CredentialsProvider provider = new BasicCredentialsProvider();
+			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(user.get(), password.get());
+			provider.setCredentials(AuthScope.ANY, credentials);
+			httpClient.setCredentialsProvider(provider);
+		}
+		return httpClient;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -73,7 +87,9 @@ class HTTPGeneratorUtils {
 		registry.register(new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
 		registry.register(new Scheme("https", 443, sslSocketFactory));
 		HttpsURLConnection.setDefaultHostnameVerifier(allowAllHostnameVerifier);
-		return new DefaultHttpClient(new SingleClientConnManager(registry));
+		DefaultHttpClient client= new DefaultHttpClient(new SingleClientConnManager(registry));
+
+		return client;
 	}
 
 	static void addJsonParameters(final HttpRequestBase request, final StringEntity jsonContent, final String httpMethod) {

@@ -4,7 +4,7 @@
 			metricName :"go_gc_duration_seconds",
 			labels : 
 				{
-				  job: "=prometheus",
+				  job: "=kubelet",
 				  quantile : "=0.25"
 				},
 			unit:"s"

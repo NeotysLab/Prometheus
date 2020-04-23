@@ -10,6 +10,8 @@ import com.neotys.prometheus.datamodel.PrometheusIndicators;
 import com.neotys.prometheus.datamodel.PrometheusResponse;
 import com.neotys.rest.dataexchange.model.Entry;
 import com.neotys.rest.dataexchange.util.Entries;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +20,7 @@ import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -45,8 +48,10 @@ public class PrometheusPlugin {
     private String prometheusHost;
     private String prometheusPort;
     private boolean ssl;
+    private Optional<String> user;
+    private Optional<String> password;
     private PrometheusPlugin(String host,String port,PrometheusIndicators prometheusIndicators, Long starttime, String vitualUserID, Context context,final String dataExchangeApiUrl,
-                             final Optional<String> proxyName,boolean ssl,boolean tracemode) {
+                             final Optional<String> proxyName,boolean ssl,boolean tracemode,Optional<String> user,Optional<String> password) {
         this.prometheusHost=host;
         this.prometheusPort=port;
         this.prometheusIndicators = prometheusIndicators;
@@ -63,9 +68,11 @@ public class PrometheusPlugin {
         this.dataExchangeApiUrl=dataExchangeApiUrl;
         this.proxyName=proxyName;
         this.ssl=ssl;
+        this.user=user;
+        this.password=password;
     }
 
-    public synchronized static PrometheusPlugin getInstance(String host, String port, PrometheusIndicators prometheusIndicators, Long starttime, String vitualUserID, Context context, final String dataExchangeApiUrl, final Optional<String> proxyName, boolean ssl, boolean traceMode)  throws Exception {
+    public synchronized static PrometheusPlugin getInstance(String host, String port, PrometheusIndicators prometheusIndicators, Long starttime, String vitualUserID, Context context, final String dataExchangeApiUrl, final Optional<String> proxyName, boolean ssl, boolean traceMode ,Optional<String> user,Optional<String> passord)  throws Exception {
         if (instance == null) {
             instance = new PrometheusPlugin(host,port,
                     prometheusIndicators,
@@ -75,7 +82,9 @@ public class PrometheusPlugin {
                     dataExchangeApiUrl,
                     proxyName,
                     ssl,
-                    traceMode);
+                    traceMode,
+                    user,
+                    passord);
         }else{
             instance.setContext(context);
             if(starttime==null)
@@ -108,8 +117,9 @@ public class PrometheusPlugin {
         final String url=getUrl();
         final Optional<Proxy> proxy = getProxy(context, proxyName, url);
         final HashMap<String,String> header=new HashMap<>();
+
         List<Entry> result=new ArrayList<>();
-        final HTTPGenerator http = new HTTPGenerator(HTTP_GET_METHOD, url, header, generateQueryString(indicator), proxy);
+        final HTTPGenerator http = new HTTPGenerator(HTTP_GET_METHOD, url, header, generateQueryString(indicator), proxy,user,password);
         try {
             if(this.tracemode){
                 context.getLogger().info("Send the API CALL:\n" + http.getRequest());

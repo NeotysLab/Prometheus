@@ -11,6 +11,7 @@ import static com.neotys.action.argument.Option.AppearsByDefault.False;
 import static com.neotys.action.argument.Option.AppearsByDefault.True;
 import static com.neotys.action.argument.Option.OptionalRequired.Required;
 import static com.neotys.action.argument.Option.OptionalRequired.Optional;
+import static com.neotys.extensions.action.ActionParameter.Type.PASSWORD;
 import static com.neotys.extensions.action.ActionParameter.Type.TEXT;
 
 enum PrometheusMonitoringOption implements Option {
@@ -22,6 +23,14 @@ enum PrometheusMonitoringOption implements Option {
             "80",
             "Dynatrace ID (section of your Dynatrace saas url).",
             INTEGER_VALIDATOR),
+    BasicAuthUser("BasicAuthUser", Optional, True, TEXT,
+            "User",
+            "If prometheus requires a basic auth , BasicAuthUser is the user",
+            NON_EMPTY),
+    BasicAuthPWD("BasicAuthPWD", Optional, True, PASSWORD,
+            "password",
+            "If prometheus requires a basic auth , BasicAuthPWD is the basic password",
+            NON_EMPTY),
     NeoLoadJsonMetricFile("NeoLoadJsonMetricFile", Required, True, TEXT,
             "${NL-CustomResources}/yourjsonfile.json",
                     "Path to the file describing the metrics to query",

@@ -98,6 +98,8 @@ Tip: Get NeoLoad API information in NeoLoad preferences: Project Preferences / R
 | -----            | ----- |
 | PrometheusHost      | Prometheus hostname or IP |
 | PrometheusPort  | Port of you prometheus server|
+| BasicAuthUser  (Optional)  | User if Basic Authentification is required|
+| BasicAuthPWD  (Optional)  | Password if Basic Authentification is required|
 | NeoLoadJsonMetricFile  | Path to the json configuration file |
 | SSL  | Define if prometheus requires to use ssl . Value possible True/False |
 | dataExchangeApiKey (Optional)  | API key of the DataExchange API |

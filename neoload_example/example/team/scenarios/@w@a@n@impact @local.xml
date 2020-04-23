@@ -53,7 +53,7 @@
             <action-curve-description
                 actionUid="053d1f29-a4fe-45bd-903a-79a356d6b77f"
                 color="153,153,0" dashed="false" populationName=""
-                scale="1.0" selected="true"
+                scale="1.0" selected="false"
                 statisticName="result.average.duration"
                 virtualUserUid="MyiPhoneUser_Create_report" zoneName=""/>
         </chart-description>
@@ -104,26 +104,16 @@
             domainMarkerVisible="true" granularityLevel="0"
             historyState="XMIN" includeInReport="false"
             rangeMarkerVisible="true"
-            title="prometheusmonitoring - Average duration" typeName="CLASSIC">
-            <action-curve-description
-                actionUid="f12cfc54-6039-42a4-9267-fb5e5d887d05"
-                color="153,153,0" dashed="false" populationName=""
-                scale="1.0" selected="true"
-                statisticName="result.average.duration"
-                virtualUserUid="Prometheus" zoneName=""/>
-        </chart-description>
-        <chart-description autoRange="true"
-            chart-description-type="chart-description-type"
-            domainMarkerVisible="true" granularityLevel="0"
-            historyState="XMIN" includeInReport="false"
-            rangeMarkerVisible="true"
-            title="Prometheus/instance:localhost:9090/quantile:0.25/job:prometheus/go_gc_duration_seconds" typeName="CLASSIC">
+            title="Prometheus/node:aks-nodepool1-23661029-vmss000003/endpoint:http-metrics/instance:10.1.1.250:10255/service:prometheus-operator-kubelet/quantile:0.25/namespace:kube-system/job:kubelet/metrics_path:/metrics/go_gc_duration_seconds" typeName="CLASSIC">
             <third-party-data-curve-description color="178,140,0"
                 dashed="false"
-                path="Prometheus/instance:localhost:9090/quantile:0.25/job:prometheus/go_gc_duration_seconds"
-                scale="1.0" selected="true" unit="s"/>
+                path="Prometheus/node:aks-nodepool1-23661029-vmss000003/endpoint:http-metrics/instance:10.1.1.250:10255/service:prometheus-operator-kubelet/quantile:0.25/namespace:kube-system/job:kubelet/metrics_path:/metrics/go_gc_duration_seconds"
+                scale="100000.0" selected="false" unit="s"/>
+            <third-party-data-curve-description color="20,106,203"
+                dashed="false"
+                path="Prometheus/node:aks-nodepool2-23661029-vmss000003/endpoint:http-metrics/instance:10.1.7.65:10255/service:prom-operator-prometheus-o-kubelet/quantile:0.25/namespace:kube-system/job:kubelet/metrics_path:/metrics/go_gc_duration_seconds"
+                scale="100000.0" selected="true" unit="s"/>
         </chart-description>
-        <empty-chart-description/>
         <empty-chart-description/>
     </charts-model-description>
     <!--****** END DASHBOARDS  ******-->

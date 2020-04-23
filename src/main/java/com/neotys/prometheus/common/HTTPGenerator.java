@@ -47,11 +47,11 @@ public class HTTPGenerator {
 						 final String url,
 						 final Map<String, String> headers,
 						 final Map<String, String> params,
-						 final Optional<Proxy> proxy)
+						 final Optional<Proxy> proxy,final Optional<String> user, final Optional<String> password)
 			throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, MalformedURLException, URISyntaxException {
 		this.request = generateHttpRequest(httpMethod, url);
 		final boolean isHttps = url.contains("https");
-		this.httpClient = newHttpClient(isHttps);
+		this.httpClient = newHttpClient(isHttps,user,password);
 
 		if (proxy.isPresent()) {
 			initProxy(proxy.get());
@@ -64,8 +64,8 @@ public class HTTPGenerator {
 	public static HTTPGenerator deleteHttpGenerator(final String url,
 													final Map<String, String> headers,
 													final Map<String, String> params,
-													final Optional<Proxy> proxy) throws Exception {
-		final HTTPGenerator httpGenerator = new HTTPGenerator(HTTP_DELETE_METHOD, url, headers, params, proxy);
+													final Optional<Proxy> proxy,Optional<String> user,Optional<String> password) throws Exception {
+		final HTTPGenerator httpGenerator = new HTTPGenerator(HTTP_DELETE_METHOD, url, headers, params, proxy,user,password);
 		return httpGenerator;
 
 	}
@@ -74,10 +74,10 @@ public class HTTPGenerator {
 													 final String url,
 													 final Map<String, String> headers,
 													 final Map<String, String> params,
-													 final Optional<Proxy> proxy,
+													 final Optional<Proxy> proxy,Optional<String> user,Optional<String> password,
 													 final String bodyJson)
 			throws Exception {
-		final HTTPGenerator httpGenerator = new HTTPGenerator(httpMethod, url, headers, params, proxy);
+		final HTTPGenerator httpGenerator = new HTTPGenerator(httpMethod, url, headers, params, proxy,user,password);
 		final StringEntity requestEntity = new StringEntity(bodyJson, "application/json","utf8");
 		addJsonParameters(httpGenerator.request, requestEntity, httpMethod);
 		return httpGenerator;
@@ -88,9 +88,9 @@ public class HTTPGenerator {
 													 final String url,
 													 final Map<String, String> headers,
 													 final Map<String, String> params,
-													 final Optional<Proxy> proxy)
+													 final Optional<Proxy> proxy,Optional<String> user,Optional<String> password)
 			throws Exception {
-		final HTTPGenerator httpGenerator = new HTTPGenerator(HTTP_POST_METHOD, url, headers, null, proxy);
+		final HTTPGenerator httpGenerator = new HTTPGenerator(HTTP_POST_METHOD, url, headers, null, proxy,user,password);
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
 

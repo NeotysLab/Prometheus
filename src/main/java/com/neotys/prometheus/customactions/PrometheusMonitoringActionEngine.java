@@ -73,6 +73,8 @@ public class PrometheusMonitoringActionEngine implements ActionEngine {
 
         final Optional<String> optionalTraceMode = parsedArgs.get(PrometheusMonitoringOption.TraceMode.getName());
         final Optional<String> proxyName = parsedArgs.get(PrometheusMonitoringOption.NeoLoadProxy.getName());
+        final Optional<String> basicUser = parsedArgs.get(PrometheusMonitoringOption.BasicAuthUser.getName());
+        final Optional<String> basicpwd = parsedArgs.get(PrometheusMonitoringOption.BasicAuthPWD.getName());
 
         final Optional<String> dataExchangeApiKey = parsedArgs.get(PrometheusMonitoringOption.NeoLoadDataExchangeApiKey.getName());
 
@@ -96,7 +98,7 @@ public class PrometheusMonitoringActionEngine implements ActionEngine {
             boolean traceMode = optionalTraceMode.isPresent() && Boolean.valueOf(optionalTraceMode.get());
             boolean boolssl=Boolean.valueOf(ssl);
 
-            PrometheusPlugin pluginData= PrometheusPlugin.getInstance(prometheussHost,prometheusPort,PrometheusUtils.getIndicators(prometheusFile),(Long)prometheusMonitoringTime,virtualUserId,context,getDefaultDataExchangeApiUrl(context),proxyName,boolssl,traceMode);
+            PrometheusPlugin pluginData= PrometheusPlugin.getInstance(prometheussHost,prometheusPort,PrometheusUtils.getIndicators(prometheusFile),(Long)prometheusMonitoringTime,virtualUserId,context,getDefaultDataExchangeApiUrl(context),proxyName,boolssl,traceMode,basicUser,basicpwd);
 
 
 
