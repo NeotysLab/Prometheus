@@ -1,4 +1,4 @@
-<p align="center"><img src="/screenshots/prometheus.png" width="40%" alt="Prometheus Logo" /></p>
+<p align="center"><img src="/screenshot/prometheus.png" width="40%" alt="Prometheus Logo" /></p>
 
 # Prometheus	Integration for NeoLoad (experimental)
 
@@ -70,7 +70,7 @@ Neoload will collect the data related to the metrics described in this json conf
 1. Download the [latest release](https://github.com/neotyslab/Prometheus/releases/latest) for NeoLoad from version 7.2
 1. Read the NeoLoad documentation to see [How to install a custom Advanced Action](https://www.neotys.com/documents/doc/neoload/latest/en/html/#25928.htm).
 
-<p align="center"><img src="/screenshots/advanced_action.png" alt="Prometheus Advanced Action" /></p>
+<p align="center"><img src="/screenshot/advanced_action.png" alt="Prometheus Advanced Action" /></p>
 
 ## NeoLoad Set-up
 
@@ -78,14 +78,14 @@ Once installed, how to use in a given NeoLoad project:
 
 1. Create a “Prometheus” User Path.
 1. Insert "PrometheusMonitoring" in the ‘Actions’ block.
-   <p align="center"><img src="/screenshots/vu.png" alt="Prometheus User Path" /></p>
+   <p align="center"><img src="/screenshot/vu.png" alt="Prometheus User Path" /></p>
 1. Select the **Actions** container and set a pacing duration of 20 seconds.
-   <p align="center"><img src="/screenshots/pacing.png" alt="Action's Pacing" /></p>
+   <p align="center"><img src="/screenshot/pacing.png" alt="Action's Pacing" /></p>
 1. Select the **Actions** container and set the "Reset user session and emulate new browser between each iteration" runtime parameters to "No".
 1. Create a "PopulationPrometheus" Population that contains 100% of "Prometheus" User Path.
-   <p align="center"><img src="/screenshots/population.png" alt="Prometheus Population" /></p>
+   <p align="center"><img src="/screenshot/population.png" alt="Prometheus Population" /></p>
 1. In the **Runtime** section, select your scenario, select the "PopulationPrometheus" population and define a constant load of 1 user for the full duration of the load test.
-   <p align="center"><img src="/screenshots/scenario.png" alt="Load Variation Policy" /></p>
+   <p align="center"><img src="/screenshot/scenario.png" alt="Load Variation Policy" /></p>
 1. Do not use multiple load generators. Good practice should be to keep only the local one.
 
 
