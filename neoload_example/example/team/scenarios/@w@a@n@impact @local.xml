@@ -99,6 +99,31 @@
                 monitorName="All/%BusyWorkers"
                 monitoredHostName="SampleServerNode02" scale="1.0" selected="true"/>
         </chart-description>
+        <chart-description autoRange="true"
+            chart-description-type="chart-description-type"
+            domainMarkerVisible="true" granularityLevel="0"
+            historyState="XMIN" includeInReport="false"
+            rangeMarkerVisible="true"
+            title="prometheusmonitoring - Average duration" typeName="CLASSIC">
+            <action-curve-description
+                actionUid="f12cfc54-6039-42a4-9267-fb5e5d887d05"
+                color="153,153,0" dashed="false" populationName=""
+                scale="1.0" selected="true"
+                statisticName="result.average.duration"
+                virtualUserUid="Prometheus" zoneName=""/>
+        </chart-description>
+        <chart-description autoRange="true"
+            chart-description-type="chart-description-type"
+            domainMarkerVisible="true" granularityLevel="0"
+            historyState="XMIN" includeInReport="false"
+            rangeMarkerVisible="true"
+            title="Prometheus/instance:localhost:9090/quantile:0.25/job:prometheus/go_gc_duration_seconds" typeName="CLASSIC">
+            <third-party-data-curve-description color="178,140,0"
+                dashed="false"
+                path="Prometheus/instance:localhost:9090/quantile:0.25/job:prometheus/go_gc_duration_seconds"
+                scale="1.0" selected="true" unit="s"/>
+        </chart-description>
+        <empty-chart-description/>
         <empty-chart-description/>
     </charts-model-description>
     <!--****** END DASHBOARDS  ******-->

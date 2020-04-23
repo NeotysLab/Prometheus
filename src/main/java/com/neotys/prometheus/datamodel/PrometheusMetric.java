@@ -48,8 +48,8 @@ public class PrometheusMetric {
     private com.neotys.rest.dataexchange.model.Entry toEntry(Long time,Double value,String unit) {
         List<String> path = new ArrayList<>();
         path.add(PROMETHEUS);
+         path.addAll(this.getPath());
         path.add(this.getMetricName());
-        path.addAll(this.getPath());
 
         return new EntryBuilder(path, time*1000)
                 .unit(unit)

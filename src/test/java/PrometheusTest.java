@@ -4,6 +4,8 @@ import com.neotys.prometheus.datamodel.PrometheusIndicators;
 import com.neotys.prometheus.datamodel.PrometheusResponse;
 import org.junit.Test;
 
+import static com.neotys.prometheus.common.Constants.*;
+
 public class PrometheusTest {
     String Json="{\n" +
             "    \"status\": \"success\",\n" +
@@ -136,6 +138,23 @@ public class PrometheusTest {
         PrometheusIndicators prometheusIndicators= new GsonBuilder().create().fromJson(contenet,PrometheusIndicators.class);
         System.out.println(prometheusIndicators.toString());
     }
+    @Test
+    public void testString() {
 
+        String s = "quantile";
+        String s2 = "!~0.25";
+        if (s2.startsWith(NOREGEXP))
+            System.out.println(s + NOREGEXP + "\"" + s2.substring(2, s2.length()) + "\",");
+        else {
+            if (s2.startsWith(REGEXP))
+                System.out.println(s + REGEXP + "\"" + s2.substring(2, s2.length()) + "\",");
+            else {
+                if (s2.startsWith(NOTEQUAL))
+                    System.out.println(s + NOTEQUAL + "\"" + s2.substring(2, s2.length()) + "\",");
+                else
+                    System.out.println(s + EQUAL + "\"" + s2.substring(1, s2.length()) + "\",");
+            }
+        }
+    }
 
 }

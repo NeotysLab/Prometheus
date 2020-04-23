@@ -30,6 +30,10 @@ public final class Constants {
 	public static final String PROMETHEUS_STEP="step";
 	public static final String PROMETHEUS_STEP_VALUE="5s";
 
+	public static final String EQUAL="=";
+	public static final String NOTEQUAL="!=";
+	public static final String REGEXP="=~";
+	public static final String NOREGEXP="!~";
 
 	public static final String PROMETHEUS_BEGIN_LABEL="{";
 	public static final String PROMETHEUS_END_LABEL="}";

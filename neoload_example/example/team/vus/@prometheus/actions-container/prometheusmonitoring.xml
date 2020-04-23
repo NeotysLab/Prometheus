@@ -11,5 +11,6 @@ Possible parameters are:&#xd;
     <custom-action-parameter name="PrometheusHost" type="TEXT" value="64.137.172.233"/>
     <custom-action-parameter name="PrometheusPort" type="TEXT" value="9090"/>
     <custom-action-parameter name="NeoLoadJsonMetricFile" type="TEXT" value="${NL-CustomResources}/yourjsonfile.json"/>
+    <custom-action-parameter name="SSL" type="TEXT" value="false"/>
     <responsePageFileDescription>recorded-responses/res_f12cfc54-6039-42a4-9267-fb5e5d887d05</responsePageFileDescription>
 </custom-action>

@@ -16,7 +16,12 @@ import org.json.JSONObject;
 
 import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +78,13 @@ public class PrometheusPlugin {
                     traceMode);
         }else{
             instance.setContext(context);
+            if(starttime==null)
+            {
+                starttime= System.currentTimeMillis()/1000;
+                starttime-=20;
+                instance.setStarttime(starttime);
+                instance.setEndtime(starttime+PROMETHEUS_MONITORING_RANGE);
+            }
         }
         return instance;
     }
@@ -92,7 +104,7 @@ public class PrometheusPlugin {
             return PROMETHEUS_API_PROTOCOL+prometheusHost+":"+prometheusPort+PROMETHEUS_QUERY_PATH;
 
     }
-    private List<Entry> getINdicatorsData(PrometheusIndicator indicator) throws Exception {
+    private List<Entry> getINdicatorsData(PrometheusIndicator indicator) throws PrometheusException, MalformedURLException, UnrecoverableKeyException, URISyntaxException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         final String url=getUrl();
         final Optional<Proxy> proxy = getProxy(context, proxyName, url);
         final HashMap<String,String> header=new HashMap<>();
@@ -174,6 +186,7 @@ public class PrometheusPlugin {
         this.proxyName = proxyName;
     }
 
+
     private Map<String,String> generateQueryString(PrometheusIndicator indicator)
     {
         Map<String,String> query=new HashMap<>();
@@ -183,7 +196,26 @@ public class PrometheusPlugin {
             {
                 StringBuilder labelfilter=new StringBuilder();
                 indicator.getLabels().forEach((s, s2) -> {
-                        labelfilter.append(s+"=\""+s2+"\",");
+                        if(s2.startsWith(NOREGEXP))
+                            labelfilter.append(s+NOREGEXP+"\""+s2.substring(2,s2.length())+"\",");
+                        else
+                        {
+                            if(s2.startsWith(REGEXP))
+                                labelfilter.append(s+REGEXP+"\""+s2.substring(2,s2.length())+"\",");
+                            else
+                            {
+                                if(s2.startsWith(NOTEQUAL))
+                                    labelfilter.append(s+NOTEQUAL+"\""+s2.substring(2,s2.length())+"\",");
+                                else
+                                {
+                                    if(s2.startsWith(EQUAL))
+                                        labelfilter.append(s+EQUAL+"\""+s2.substring(1,s2.length())+"\",");
+                                    else
+                                        labelfilter.append(s+EQUAL+"\""+s2+"\",");
+                                }
+
+                            }
+                        }
 
                 });
 

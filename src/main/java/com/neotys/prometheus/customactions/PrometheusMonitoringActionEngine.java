@@ -85,7 +85,7 @@ public class PrometheusMonitoringActionEngine implements ActionEngine {
 
             if(!(prometheusMonitoringTime instanceof Long)){
                 requestBuilder.append("(first execution).\n");
-            } else if((Long)prometheusMonitoringTime + 15*1000 > prometheusCurrentExecution){
+            } else if(((Long)prometheusMonitoringTime + 15)*1000 > prometheusCurrentExecution){
                 return ResultFactory.newErrorResult(context, STATUS_CODE_BAD_CONTEXT, "Bad context: Not enough delay between the two Prometheus advanced action execution. Make sure to have at least 20 seconds pacing on the Actions container.");
             } else {
                 requestBuilder.append("(last execution was " + ((prometheusCurrentExecution - (Long)prometheusMonitoringTime)/1000) + " seconds ago)\n");

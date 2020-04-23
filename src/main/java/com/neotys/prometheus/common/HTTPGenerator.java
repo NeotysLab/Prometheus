@@ -19,6 +19,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +48,7 @@ public class HTTPGenerator {
 						 final Map<String, String> headers,
 						 final Map<String, String> params,
 						 final Optional<Proxy> proxy)
-			throws Exception {
+			throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, MalformedURLException, URISyntaxException {
 		this.request = generateHttpRequest(httpMethod, url);
 		final boolean isHttps = url.contains("https");
 		this.httpClient = newHttpClient(isHttps);

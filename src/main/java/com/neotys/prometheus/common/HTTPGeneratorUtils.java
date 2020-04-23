@@ -28,6 +28,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +54,7 @@ class HTTPGeneratorUtils {
 		request.setURI(new URL(urlWithParameters).toURI());
 	}
 
-	static DefaultHttpClient newHttpClient(final boolean isHttps) throws Exception {
+	static DefaultHttpClient newHttpClient(final boolean isHttps) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		if (isHttps) {
 			return newHttpsClient();
 		} else {
@@ -61,7 +65,7 @@ class HTTPGeneratorUtils {
 	}
 
 	@SuppressWarnings("deprecation")
-	private static DefaultHttpClient newHttpsClient() throws Exception {
+	private static DefaultHttpClient newHttpsClient() throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
 		X509HostnameVerifier allowAllHostnameVerifier = SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 		SSLSocketFactory sslSocketFactory = new SSLSocketFactory(acceptingTrustStrategy, allowAllHostnameVerifier);
